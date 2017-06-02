@@ -74,12 +74,20 @@ namespace SimonStore.Controllers
                 Models.ERPRevenueModel revenue = new Models.ERPRevenueModel();
                 revenue.Revenue = reader.GetDecimal(0);
                 revenue.Date = new DateTime(reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3));
+
+                revenues.Add(revenue);
             }
             connection.Close();
 
             return View(revenues);
         }
 
+        /// <summary>
+        /// Calls the "sp_EmployeeSchedule" stored procedure
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="day"></param>
+        /// <returns></returns>
         public ActionResult Schedule(int? id, DateTime? day)
         {
             if (!day.HasValue)
@@ -88,7 +96,37 @@ namespace SimonStore.Controllers
             }
             //TODO: call the sp_GetEmployeesWorking procedure
 
-            return View();
+            string connectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = SimonsStore; Integrated Security = True; Connect Timeout = 15; Encrypt = False; TrustServerCertificate = True; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
+            System.Data.SqlClient.SqlConnection connection = new System.Data.SqlClient.SqlConnection(connectionString);
+
+            connection.Open();
+
+            System.Data.SqlClient.SqlCommand command = connection.CreateCommand();
+            command.CommandText = "sp_GetStoreRevenue";
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            System.Data.SqlClient.SqlParameter parameter = command.CreateParameter();
+            parameter.Direction = System.Data.ParameterDirection.Input;
+            parameter.ParameterName = "@store";
+            parameter.SqlDbType = System.Data.SqlDbType.Int;
+            parameter.SqlValue = id;
+
+            command.Parameters.Add(parameter);
+
+            List<Models.ERPScheduleModel> schedules = new List<Models.ERPScheduleModel>();
+            System.Data.SqlClient.SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Models.ERPScheduleModel schedule = new Models.ERPScheduleModel();
+                schedule.EmployeeName = reader.GetString(reader.GetOrdinal("Name"));
+                schedule.StartTime = reader.GetDateTime(1);
+                schedule.EndTime = reader.GetDateTime(2);
+
+                schedules.Add(schedule);
+            }
+            connection.Close();
+
+            return View(schedules);
         }
 
         public ActionResult Add()

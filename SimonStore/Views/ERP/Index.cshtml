@@ -8,8 +8,8 @@
     {
         <tr>
             <td>@store.Name</td>
-            <td>@Html.ActionLink("Revenue Report", "Revenues", new { id = @store.ID }, new { @class = "btn" })</td>
-            <td>@Html.ActionLink("Employee Schedule", "Schedule", new { id = @store.ID }, new { @class = "btn" })</td>
+            <td>@Html.ActionLink("Revenue Report", "Revenues", new { id = @store.ID , something= "anything"}, new { @class = "btn" })</td>
+            <td>@Html.ActionLink("Employee Schedule", "Schedule", new { id = @store.ID, day=HttpUtility.UrlEncode(DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd")) }, new { @class = "btn" })</td>
         </tr>
     }
 </table>
