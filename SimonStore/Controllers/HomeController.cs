@@ -8,6 +8,7 @@ namespace SimonStore.Controllers
 {
     public class HomeController : Controller
     {
+        //[CartCalculator]
         public ActionResult Index()
         {
             return View();

@@ -1,0 +1,34 @@
+﻿@model SimonStore.Models.CheckoutModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Checkout</h2>
+
+@using (Html.BeginForm())
+{
+    @*Anti-forgery token creates a hidden input on my form that has a bunch of hashed information embedded within it
+      The hashed data includes browser heuristics ushc as IP address, broswer version 
+    *@
+    @Html.AntiForgeryToken()
+
+    if(!this.ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @Html.ValidationSummary(false)
+        </div>
+    }
+    
+    <div class="form-group">
+        @Html.LabelFor(x => x.ContactEmail, new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.ContactEmail, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.ContactEmail)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.ContactPhone, new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.ContactPhone, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.ContactPhone)
+    </div>
+    @*TODO: Need to add a lot more inputs on this page*@
+    <input type="submit" value="Complete Checkout" class="btn btn-primary" />
+}

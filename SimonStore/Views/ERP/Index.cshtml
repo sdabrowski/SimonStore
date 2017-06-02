@@ -1,0 +1,15 @@
+﻿@model IEnumerable<SimonStore.Models.ERPStoreModel>
+@{
+    ViewBag.Title = "Stores";
+}
+@Html.ActionLink("Add New Store", "Add")
+<table class="table">
+    @foreach(var store in Model)
+    {
+        <tr>
+            <td>@store.Name</td>
+            <td>@Html.ActionLink("Revenue Report", "Revenues", new { id = @store.ID }, new { @class = "btn" })</td>
+            <td>@Html.ActionLink("Employee Schedule", "Schedule", new { id = @store.ID }, new { @class = "btn" })</td>
+        </tr>
+    }
+</table>

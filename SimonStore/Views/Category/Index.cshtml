@@ -1,0 +1,19 @@
+﻿@model IEnumerable<SimonStore.Models.ProductModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Products</h2>
+@foreach (SimonStore.Models.ProductModel product in Model){
+    <div class="panel panel-default">
+        <div class="panel-heading">@product.Name</div>
+        <div class="panel-body">
+            <span>@((product.Price ?? 0).ToString("c"))</span>
+            <p>@product.Description</p>
+            @Html.ActionLink("View Product", "Index", "Product", new { id = product.ID}, new { @class = "btn btn-primary"})
+
+        </div>
+
+    </div>
+}
+
