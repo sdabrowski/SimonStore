@@ -9,6 +9,15 @@ namespace SimonStore.Controllers
 {
     public class CartController : Controller
     {
+
+
+
+        protected SimonStoreEntities entities = new SimonStoreEntities();
+        protected override void Dispose(bool disposing)
+        {
+            entities.Dispose();
+            base.Dispose(disposing);
+        }
         // GET: Cart
         public ActionResult Index()
         {
@@ -16,20 +25,17 @@ namespace SimonStore.Controllers
             if (Request.Cookies.AllKeys.Contains("cart"))
             {
                 HttpCookie cartCookie = Request.Cookies["cart"];
-                //CartCookie comes in with "2,1", meaning productId = 2, quantity = 1
-                var cookieValues = cartCookie.Value.Split(',');
-                int productID = int.Parse(cookieValues[0].Trim());
-                int quantity = int.Parse(cookieValues[1].Trim());
-                ProductModel product = ProductData.Products
-                    .First(x => x.ID == productID);
-                CartProductModel cartProduct = new CartProductModel();
-                cartProduct.Description = product.Description;
-                cartProduct.ID = product.ID;
-                cartProduct.Name = product.Name;
-                cartProduct.Price = product.Price;
-                cartProduct.Quantity = quantity;
+                var order = entities.Orders.Find(int.Parse(cartCookie.Value));
 
-                cartProducts.Add(cartProduct);
+                cartProducts = order.OrderedProducts.Select(x => new CartProductModel
+                {
+                    Description = x.Product.Description,
+                    ID = 0,
+                    Name = x.Product.Name,
+                    Price = x.Product.Price,
+                    Quantity = x.Quantity ?? 0
+                }).ToList();
+                
             }
             return View(cartProducts);
         }

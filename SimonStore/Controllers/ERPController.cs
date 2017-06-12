@@ -96,7 +96,7 @@ namespace SimonStore.Controllers
             }
             //TODO: call the sp_GetEmployeesWorking procedure
 
-            string connectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = SimonsStore; Integrated Security = True; Connect Timeout = 15; Encrypt = False; TrustServerCertificate = True; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["StoreDB"].ConnectionString;
             System.Data.SqlClient.SqlConnection connection = new System.Data.SqlClient.SqlConnection(connectionString);
 
             connection.Open();

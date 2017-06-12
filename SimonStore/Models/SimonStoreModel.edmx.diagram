@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4671605cf69e47f28810d07f090836d5" Name="Diagram1">
+        <EntityTypeShape EntityType="SimonStoreModel.AspNetRole" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="SimonStoreModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="15" />
+        <EntityTypeShape EntityType="SimonStoreModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="12.5" />
+        <EntityTypeShape EntityType="SimonStoreModel.AspNetUser" Width="1.5" PointX="3" PointY="9.375" />
+        <EntityTypeShape EntityType="SimonStoreModel.Category" Width="1.5" PointX="7.75" PointY="3.375" />
+        <EntityTypeShape EntityType="SimonStoreModel.CategoriesProduct" Width="1.5" PointX="10" PointY="2.375" />
+        <EntityTypeShape EntityType="SimonStoreModel.Manufacturer" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="SimonStoreModel.OrderedProduct" Width="1.5" PointX="7.5" PointY="7.375" />
+        <EntityTypeShape EntityType="SimonStoreModel.Order" Width="1.5" PointX="5.25" PointY="6.125" />
+        <EntityTypeShape EntityType="SimonStoreModel.ProductImage" Width="1.5" PointX="7.5" PointY="11.375" />
+        <EntityTypeShape EntityType="SimonStoreModel.Product" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="SimonStoreModel.ShippingMethod" Width="1.5" PointX="3" PointY="6.375" />
+        <EntityTypeShape EntityType="SimonStoreModel.User" Width="1.5" PointX="5.25" PointY="17.75" />
+        <AssociationConnector Association="SimonStoreModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SimonStoreModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SimonStoreModel.FK_Orders_Users" />
+        <AssociationConnector Association="SimonStoreModel.FK_Users_AspNetUsers" />
+        <AssociationConnector Association="SimonStoreModel.FK_Categories_Categories" />
+        <AssociationConnector Association="SimonStoreModel.FK_CategoriesProducts_Categories" />
+        <AssociationConnector Association="SimonStoreModel.FK_CategoriesProducts_Products" />
+        <AssociationConnector Association="SimonStoreModel.FK_Product_Manufacturer" />
+        <AssociationConnector Association="SimonStoreModel.FK_OrderedProducts_Orders" />
+        <AssociationConnector Association="SimonStoreModel.FK_OrderedProducts_Products" />
+        <AssociationConnector Association="SimonStoreModel.FK_Orders_ShippingMethod" />
+        <AssociationConnector Association="SimonStoreModel.FK_ProductImage_Products" />
+        <AssociationConnector Association="SimonStoreModel.AspNetUserRoles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
