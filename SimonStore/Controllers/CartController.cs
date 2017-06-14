@@ -9,15 +9,13 @@ namespace SimonStore.Controllers
 {
     public class CartController : Controller
     {
-
-
-
         protected SimonStoreEntities entities = new SimonStoreEntities();
         protected override void Dispose(bool disposing)
         {
             entities.Dispose();
             base.Dispose(disposing);
         }
+
         // GET: Cart
         public ActionResult Index()
         {
@@ -26,15 +24,12 @@ namespace SimonStore.Controllers
                 HttpCookie cartCookie = Request.Cookies["cart"];
                 var order = entities.Orders.Find(int.Parse(cartCookie.Value));
 
-                
                 return View(order);
             }
-            return RedirectToAction("index", "Home");
-            
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Cart
-        // This part doesn't work. Needs to be updated with the code on top.
         [HttpPost]
         public ActionResult Index(Order model)
         {
@@ -43,6 +38,11 @@ namespace SimonStore.Controllers
             {
                 var modelProduct = model.OrderedProducts.FirstOrDefault(x => x.SKU == product.SKU);
                 product.Quantity = modelProduct.Quantity;
+
+                if(product.Quantity == 0)
+                {
+                    //Figure out what to write in this. Ask Joe.
+                }
             }
             entities.SaveChanges();
             return RedirectToAction("Index");

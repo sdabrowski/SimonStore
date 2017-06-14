@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SimonStore.Models;
 using Braintree;
 using System.Configuration;
+using System.Threading.Tasks;
 
 namespace SimonStore.Controllers
 {
@@ -24,7 +25,7 @@ namespace SimonStore.Controllers
         //POST: Checkout
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async ActionResult Index(CheckoutModel model)
+        public async Task<ActionResult> Index(CheckoutModel model)
         {
             //Check if the model-state is valid -- this will catch anytime someone hacks your client-side validation
             if (ModelState.IsValid)
