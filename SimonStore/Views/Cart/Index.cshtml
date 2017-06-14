@@ -1,15 +1,10 @@
-﻿@model IEnumerable<SimonStore.Models.CartProductModel>
+﻿@model SimonStore.Models.Order
 @{
     ViewBag.Title = "Index";
-    decimal totalCost = 0m;
-    foreach(var product in Model)
-    {
-        totalCost += (product.Price ?? 0) * product.Quantity;
-    }
 }
 
 <h2>Cart</h2>
-@if(Model.Count() == 0)
+@if(Model.OrderedProducts.Count() == 0)
 {
     <div class="alert alert-warning">
         <p>Your cart is currently empty.</p>
@@ -20,6 +15,7 @@ else
 {
     using (Html.BeginForm())
     {
+        @Html.HiddenFor(m => m.OrderID)
     <table class="table table-striped">
         <thead>
             <tr>
@@ -32,23 +28,26 @@ else
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < Model.Count(); i++)
+            @for (int i = 0; i < Model.OrderedProducts.Count(); i++)
             {
                 <tr>
                     <td></td>
-                    <td>@Model.ElementAt(i).Name</td>
-                    <td>@Model.ElementAt(i).Description</td>
-                    <td>@((Model.ElementAt(i).Price ?? 0).ToString("c"))</td>
-                    <td>@Html.TextBoxFor(m => m.ElementAt(i).Quantity, new { @class = "form-control"})</td>
+                    <td>@Model.OrderedProducts.ElementAt(i).Product.Name</td>
+                    <td>@Model.OrderedProducts.ElementAt(i).Product.Description</td>
+                    <td>@((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0).ToString("c"))</td>
+                    <td>
+                        <input type="hidden" name="OrderedProducts[@i].SKU" value="@Model.OrderedProducts.ElementAt(i).SKU" />
+                        <input type="number" name="OrderedProducts[@i].Quantity" value="@Model.OrderedProducts.ElementAt(i).Quantity" class = "form-control" />
+                    </td>
                     @*the above line will render out <input type = "text" name = "model[0].quantity" class="form-control" />*@
-                    <td>@(((Model.ElementAt(i).Price ?? 0) * Model.ElementAt(i).Quantity).ToString("c"))</td>
+                    <td>@(((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0) * (Model.OrderedProducts.ElementAt(i).Quantity ?? 0)).ToString("c"))</td>
                 </tr>
             }
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="5"></td>
-                <td>@totalCost.ToString("c")</td>
+                <td>@Model.OrderedProducts.Sum(x => (x.Quantity ?? 0) * (x.ProductPrice ?? 0)).ToString("c")</td>
             </tr>
         </tfoot>
         

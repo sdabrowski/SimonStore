@@ -21,40 +21,30 @@ namespace SimonStore.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            List<Models.CartProductModel> cartProducts = new List<Models.CartProductModel>();
             if (Request.Cookies.AllKeys.Contains("cart"))
             {
                 HttpCookie cartCookie = Request.Cookies["cart"];
                 var order = entities.Orders.Find(int.Parse(cartCookie.Value));
 
-                cartProducts = order.OrderedProducts.Select(x => new CartProductModel
-                {
-                    Description = x.Product.Description,
-                    ID = 0,
-                    Name = x.Product.Name,
-                    Price = x.Product.Price,
-                    Quantity = x.Quantity ?? 0
-                }).ToList();
                 
+                return View(order);
             }
-            return View(cartProducts);
+            return RedirectToAction("index", "Home");
+            
         }
 
-        // Post: Cart
+        // POST: Cart
+        // This part doesn't work. Needs to be updated with the code on top.
         [HttpPost]
-        public ActionResult Index(CartProductModel[] model, int? quantity)
+        public ActionResult Index(Order model)
         {
-            HttpCookie cartCookie = Request.Cookies["cart"];
-            //CartCookie comes in with "2,1", meaning productId = 2, quantity = 1
-            var cookieValues = cartCookie.Value.Split(',');
-            int productId = int.Parse(cookieValues[0].Trim());
-            cartCookie.Value = productId + "," + quantity.Value;
-
-            if(quantity == null || quantity.Value < 1)
+            var order = entities.Orders.Find(model.OrderID);
+            foreach(var product in order.OrderedProducts)
             {
-                cartCookie.Expires = DateTime.UtcNow;
+                var modelProduct = model.OrderedProducts.FirstOrDefault(x => x.SKU == product.SKU);
+                product.Quantity = modelProduct.Quantity;
             }
-            Response.SetCookie(cartCookie);
+            entities.SaveChanges();
             return RedirectToAction("Index");
         }
     }

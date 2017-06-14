@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SimonStore.Models;
+using Braintree;
+using System.Configuration;
 
 namespace SimonStore.Controllers
 {
@@ -19,14 +21,26 @@ namespace SimonStore.Controllers
             return View(model);
         }
 
-        //Post: Checkout
+        //POST: Checkout
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(CheckoutModel model)
+        public async ActionResult Index(CheckoutModel model)
         {
             //Check if the model-state is valid -- this will catch anytime someone hacks your client-side validation
             if (ModelState.IsValid)
             {
+                var gateway = new BraintreeGateway
+                {
+                    Environment = Braintree.Environment.SANDBOX,
+                    MerchantId = ConfigurationManager.AppSettings["Braintree.MerchantID"],
+                    PublicKey =  ConfigurationManager.AppSettings["Braintree.PublicKey"],
+                    PrivateKey = ConfigurationManager.AppSettings["Braintree.PrivateKey"]
+                };
+                CustomerRequest customer = new CustomerRequest();
+                customer.Email = model.ContactEmail;
+                customer.Phone = model.ContactPhone;
+                var customerResult = await gateway.Customer.CreateAsync(customer);
+
                 //TODO: Save the checkout information somewhere
                 return RedirectToAction("Index", "Receipt");
             }

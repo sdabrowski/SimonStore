@@ -1,0 +1,8 @@
+﻿
+@{
+    ViewBag.Title = "ConfirmationSent";
+}
+
+<h2>We've sent an email to @TempData["EmailAddress"]. Please confirm your account before logging in.</h2>
+@Html.ActionLink("Home", "Index", "Home", null, new { @class ="btn btn-primary"} )
+
