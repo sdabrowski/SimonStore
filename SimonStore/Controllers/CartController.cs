@@ -38,12 +38,9 @@ namespace SimonStore.Controllers
             {
                 var modelProduct = model.OrderedProducts.FirstOrDefault(x => x.SKU == product.SKU);
                 product.Quantity = modelProduct.Quantity;
-
-                if(product.Quantity == 0)
-                {
-                    //Figure out what to write in this. Ask Joe.
-                }
+                
             }
+            entities.OrderedProducts.RemoveRange(order.OrderedProducts.Where(x => x.Quantity == 0));
             entities.SaveChanges();
             return RedirectToAction("Index");
         }

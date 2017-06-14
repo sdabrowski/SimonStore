@@ -137,6 +137,10 @@
       <HintPath>..\packages\Sendgrid.9.4.1\lib\net452\SendGrid.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="smartystreets-dotnet-sdk, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\smartystreets-dotnet-sdk.5.1.1\lib\net40\smartystreets-dotnet-sdk.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />

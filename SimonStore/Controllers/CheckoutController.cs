@@ -47,5 +47,28 @@ namespace SimonStore.Controllers
             }
             return View(model);
         }
+
+        public ActionResult ValidateAddress(string street1, string street2, string city, string state, string postalCode)
+        {
+            if (!string.IsNullOrEmpty(street1) && !string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(state)
+                //&& (Request.UrlReferrer.Host == Request.Url.Host)     //Uncommenting this will make sure your validate function only works on your site
+                )
+            {
+                SmartyStreets.ClientBuilder builder = new SmartyStreets.ClientBuilder(
+                    ConfigurationManager.AppSettings["SmartyStreets.AuthId"],
+                    ConfigurationManager.AppSettings["SmartyStreets.AuthToken"]);
+                var client = builder.BuildUsStreetApiClient();
+
+                SmartyStreets.USStreetApi.Lookup lookup = new SmartyStreets.USStreetApi.Lookup();
+                lookup.Street = street1;
+                lookup.Street2 = street2;
+                lookup.City = city;
+                lookup.State = state;
+                lookup.ZipCode = postalCode;
+                client.Send(lookup);
+                return Json(lookup.Result.Select(x => new { Street1 = x.DeliveryLine1, Street2 = x.DeliveryLine2, City = x.Components.CityName, State = x.Components.State, PostalCode = x.Components.ZipCode }), JsonRequestBehavior.AllowGet);
+            }
+            return Json(new object[0], JsonRequestBehavior.AllowGet);
+        }
     }
 }
