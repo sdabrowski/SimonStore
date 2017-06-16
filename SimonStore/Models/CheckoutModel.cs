@@ -46,7 +46,7 @@ namespace SimonStore.Models
         [Display(Name = "Credit Card Expiration Month")]
         public int? CreditCardExpirationMonth { get; set; }
         [Required]
-        [Display(Name = "Creidt Card Expiration Year")]
+        [Display(Name = "Credit Card Expiration Year")]
         public int? CreditCardExpirationYear { get; set; }
         
     }

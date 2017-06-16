@@ -4,13 +4,21 @@
 }
 
 <h2>Products</h2>
-@foreach (SimonStore.Models.Product product in Model){
-    <div class="panel panel-default">
-        <div class="panel-heading">@product.Name</div>
-        <div class="panel-body">
-            <span>@((product.Price ?? 0).ToString("c"))</span>
-            <p>@product.Description</p>
-            @Html.ActionLink("View Product", "Index", "Product", new { id = product.SKU}, new { @class = "btn btn-primary"})
-        </div>
+<div class="container">
+    <div class="row">
+        @foreach (SimonStore.Models.Product product in Model)
+        {
+            <div class="col-xs-12 col-sm-6 col-md-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">@product.Name</div>
+                    <div class="panel-body">
+                        <span>@((product.Price ?? 0).ToString("c"))</span>
+                        <p>@product.Description</p>
+
+                        @Html.ActionLink("View Product", "Index", "Product", new { id = product.SKU }, new { @class = "btn btn-primary" })
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-}
+</div>

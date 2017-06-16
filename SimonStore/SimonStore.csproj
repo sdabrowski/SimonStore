@@ -230,7 +230,6 @@
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>SimonStoreModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CartProductModel.cs" />
     <Compile Include="Models\CategoriesProduct.cs">
       <DependentUpon>SimonStoreModel.tt</DependentUpon>
     </Compile>
@@ -256,7 +255,6 @@
     <Compile Include="Models\ProductImage.cs">
       <DependentUpon>SimonStoreModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ShippingMethod.cs">
       <DependentUpon>SimonStoreModel.tt</DependentUpon>
     </Compile>
