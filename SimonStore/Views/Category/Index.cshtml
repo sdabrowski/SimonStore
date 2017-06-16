@@ -11,9 +11,6 @@
             <span>@((product.Price ?? 0).ToString("c"))</span>
             <p>@product.Description</p>
             @Html.ActionLink("View Product", "Index", "Product", new { id = product.SKU}, new { @class = "btn btn-primary"})
-
         </div>
-
     </div>
 }
-

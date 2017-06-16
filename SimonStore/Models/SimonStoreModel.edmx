@@ -131,7 +131,8 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SKU" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Image" Type="nvarchar" MaxLength="100" />
+          <Property Name="ImageLocation" Type="nvarchar" MaxLength="100" />
+          <Property Name="AlternateText" Type="nvarchar" MaxLength="100" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="LastModifiedOn" Type="datetime" />
         </EntityType>
@@ -696,6 +697,8 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Product" Relationship="SimonStoreModel.FK_ProductImage_Products" FromRole="ProductImage" ToRole="Product" />
+          <Property Name="ImageLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AlternateText" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -1062,9 +1065,10 @@
           <EntitySetMapping Name="ProductImages">
             <EntityTypeMapping TypeName="SimonStoreModel.ProductImage">
               <MappingFragment StoreEntitySet="ProductImages">
+                <ScalarProperty Name="AlternateText" ColumnName="AlternateText" />
+                <ScalarProperty Name="ImageLocation" ColumnName="ImageLocation" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="SKU" ColumnName="SKU" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

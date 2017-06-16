@@ -4,6 +4,10 @@
 }
 
 <h2>@Model.Name</h2>
+@if (@Model.ProductImages.Any())
+{
+    <img class="img-responsive" src="@Model.ProductImages.First().ImageLocation" alt="@Model.ProductImages.First().AlternateText" />
+}
 <span class="pull-right">@((Model.Price ?? 0m).ToString("c"))</span>
 
 

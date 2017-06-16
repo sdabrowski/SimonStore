@@ -19,6 +19,8 @@ namespace SimonStore.Models
         public string Image { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
+        public string ImageLocation { get; set; }
+        public string AlternateText { get; set; }
     
         public virtual Product Product { get; set; }
     }

@@ -175,4 +175,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="LastModifiedOn" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="2af481f7-6f98-44e6-a521-46a719e5d863" ChangeDateTime="06/16/2017 03:07:46">
+    <Property Name="ElementName" Value="[dbo].[ProductImages].[Image]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ProductImages]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ImageLocation" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9deceac1-b125-44a9-9662-fe4faf3349b0" ChangeDateTime="06/16/2017 03:08:54">
+    <Property Name="ElementName" Value="[dbo].[ProductImages].[ImageLocation]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ProductImages]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Image" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="618b69e5-16c8-4854-a8a3-2c706c8de0ca" ChangeDateTime="06/16/2017 03:11:00">
+    <Property Name="ElementName" Value="[dbo].[ProductImages].[Image]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ProductImages]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ImageLocation" />
+  </Operation>
 </Operations>
