@@ -12,7 +12,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">@product.Name</div>
                     <div class="panel-body">
-                        <span>@((product.Price ?? 0).ToString("c"))</span>
+                        @if (@product.ProductImages.Any())
+                        {
+                            <img class="img-responsive pull-right" src="@product.ProductImages.First().ImageLocation" alt="@product.ProductImages.First().AlternateText" />
+                        }
+                        <span><strong>Price: </strong>@((product.Price ?? 0).ToString("c"))</span>
                         <p>@product.Description</p>
 
                         @Html.ActionLink("View Product", "Index", "Product", new { id = product.SKU }, new { @class = "btn btn-primary" })

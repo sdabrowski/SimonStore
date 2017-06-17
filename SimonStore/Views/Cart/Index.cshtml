@@ -13,7 +13,6 @@
 }
 else
 {
-
     using (Html.BeginForm())
     {
         @Html.HiddenFor(m => m.OrderID)
@@ -25,6 +24,7 @@ else
                 <th>Description</th>
                 <th>Unit Price</th>
                 <th>Quantity</th>
+                <th></th>
                 <th>Total Price</th>
             </tr>
         </thead>
@@ -38,8 +38,11 @@ else
                     <td>@((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0).ToString("c"))</td>
                     <td>
                         <input type="hidden" name="OrderedProducts[@i].SKU" value="@Model.OrderedProducts.ElementAt(i).SKU" />
-                        <input type="number" name="OrderedProducts[@i].Quantity" value="@Model.OrderedProducts.ElementAt(i).Quantity" class = "form-control" />
+                        <input type="number" name="OrderedProducts[@i].Quantity" value="@Model.OrderedProducts.ElementAt(i).Quantity" class="form-control" />
                     </td>
+                    <td><button onclick="removeItem(@Model.OrderedProducts.ElementAt(i).Quantity)" class="btn btn-danger">Remove</button></td>
+                    @*<td><input type="button" value="Remove" id="Remove@i" class="btn btn-danger" /></td>*@
+                    
                     @*the above line will render out <input type = "text" name = "model[0].quantity" class="form-control" />*@
                     <td>@(((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0) * (Model.OrderedProducts.ElementAt(i).Quantity ?? 0)).ToString("c"))</td>
                 </tr>
@@ -47,7 +50,7 @@ else
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="5"></td>
+                <td colspan="6"></td>
                 <td>@Model.OrderedProducts.Sum(x => (x.Quantity ?? 0) * (x.ProductPrice ?? 0)).ToString("c")</td>
             </tr>
         </tfoot>
@@ -56,4 +59,13 @@ else
     <input type="submit" value="Update Cart" class="btn btn-default" />
     @Html.ActionLink("Checkout", "Index", "Checkout", null, new { @class = "btn btn-primary" })
     }
+    <script>
+        function removeItem(x){
+            vx = 0;
+        };
+
+        @*$("Remove").click(function() {
+            @Model.OrderedProducts.First().Quantity = 0;
+        });*@
+    </script>
 }

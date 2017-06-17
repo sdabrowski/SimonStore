@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\codingtemple\documents\visual studio 2015\Projects\SimonStore\SimonStore\Models\SimonStoreModel.edmx'. 
+﻿// T4 code generation is enabled for model 'G:\Users\Szymon\Documents\GitHub\SimonStore\SimonStore\Models\SimonStoreModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

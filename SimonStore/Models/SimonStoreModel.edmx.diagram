@@ -6,8 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="4671605cf69e47f28810d07f090836d5" Name="Diagram1">
         <EntityTypeShape EntityType="SimonStoreModel.AspNetRole" Width="1.5" PointX="0.75" PointY="9.75" />
-        <EntityTypeShape EntityType="SimonStoreModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="16.25" />
-        <EntityTypeShape EntityType="SimonStoreModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="19" />
+        <EntityTypeShape EntityType="SimonStoreModel.AspNetUserClaim" Width="1.5" PointX="4.75" PointY="13.75" />
+        <EntityTypeShape EntityType="SimonStoreModel.AspNetUserLogin" Width="1.5" PointX="4.75" PointY="15.875" />
         <EntityTypeShape EntityType="SimonStoreModel.AspNetUser" Width="1.5" PointX="3" PointY="8.375" />
         <EntityTypeShape EntityType="SimonStoreModel.Category" Width="1.5" PointX="10.75" PointY="2.375" />
         <EntityTypeShape EntityType="SimonStoreModel.CategoriesProduct" Width="1.5" PointX="13" PointY="1.875" />

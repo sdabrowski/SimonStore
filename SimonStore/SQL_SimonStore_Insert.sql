@@ -13,7 +13,7 @@ VALUES
 ('ELW-0004', 'Dark Green - 1000'' Spool', 48, 'This is a 1000'' Spool of Dark Green 550 Paracord', 48)
 
 INSERT INTO ProductImages
-(SKU, [ImageLocation], AlternateText)
+(SKU, ImageLocation, AlternateText)
 VALUES
 ('ELW-0001', '/Images/ELW-0001_spool.png', 'An image of a Black Spool of Paracord'),
 ('ELW-0002', '/Images/ELW-0002_spool.png', 'An image of a Charcoal Gray Spool of Paracord'),
