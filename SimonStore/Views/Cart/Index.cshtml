@@ -40,7 +40,7 @@ else
                         <input type="hidden" name="OrderedProducts[@i].SKU" value="@Model.OrderedProducts.ElementAt(i).SKU" />
                         <input type="number" name="OrderedProducts[@i].Quantity" value="@Model.OrderedProducts.ElementAt(i).Quantity" class="form-control" />
                     </td>
-                    <td><button onclick="removeItem(@Model.OrderedProducts.ElementAt(i).Quantity)" class="btn btn-danger">Remove</button></td>
+                    <td><button onclick="removeItem(this)" id="Remove" class="btn btn-danger">Remove</button></td>
                     @*<td><input type="button" value="Remove" id="Remove@i" class="btn btn-danger" /></td>*@
                     
                     @*the above line will render out <input type = "text" name = "model[0].quantity" class="form-control" />*@
@@ -59,13 +59,13 @@ else
     <input type="submit" value="Update Cart" class="btn btn-default" />
     @Html.ActionLink("Checkout", "Index", "Checkout", null, new { @class = "btn btn-primary" })
     }
-    <script>
-        function removeItem(x){
-            vx = 0;
-        };
+}
 
-        @*$("Remove").click(function() {
-            @Model.OrderedProducts.First().Quantity = 0;
-        });*@
-    </script>
+@section Scripts{
+<script>
+    function removeItem(x){
+        $(x).parent().parent().find(".form-control").val(0);
+        console.log("Test!")
+    };
+</script>
 }

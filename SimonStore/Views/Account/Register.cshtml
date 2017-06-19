@@ -10,13 +10,22 @@
 }
 @using (Html.BeginForm())
 {
-    <div>
-        <label for="username">Username</label>
-        <input name="username" type="text" />
+    <div align="center">
+        <div class="well well-sm">
+
+            <div class="form-group"><h2>Account Creation</h2></div>
+            
+            <div class="form-group">
+                    <input class="form-control" name="username" type="text" placeholder="Username" />
+            </div>
+            
+            <div class="form-group">
+                    <input class="form-control" name="password" type="password" placeholder="Password" />
+            </div>
+
+            <input type="submit" class="btn btn-default" value="Create Account" />
+        </div>
     </div>
-    <div>
-        <label for="password">Password</label>
-        <input name="password" type="password" />
-    </div>
-    <input type="submit" value="Create Account" />
+    
+    
 }

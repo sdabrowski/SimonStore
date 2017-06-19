@@ -15,13 +15,11 @@ namespace SimonStore.Models
         }
 
         [Required]
-        [Display(Name = "Billing Address")]
-        public AddressModel BillingAddress { get; set; }
+        [Display(Name = "First Name")]
+        public AddressModel FirstName { get; set; }
         [Required]
-        [Display(Name = "Shipping Address")]
-        public AddressModel ShippingAddress { get; set; }
-        [Display(Name = "Recipient Name")]
-        public string ShippingToLine { get; set; }
+        [Display(Name = "Last Name")]
+        public AddressModel LastName { get; set; }
         [Phone]
         [Display(Name = "Phone Number")]
         public string ContactPhone { get; set; }
@@ -31,7 +29,16 @@ namespace SimonStore.Models
         public string ContactEmail { get; set; }
 
         [Required]
-        [Display(Name = "Credit Card Name")]
+        [Display(Name = "Billing Address")]
+        public AddressModel BillingAddress { get; set; }
+        [Required]
+        [Display(Name = "Shipping Address")]
+        public AddressModel ShippingAddress { get; set; }
+        [Display(Name = "Recipient Name")]
+        public string ShippingToLine { get; set; }
+
+        [Required]
+        [Display(Name = "Cardholder's Name")]
         public string CreditCardName { get; set; }
         [Required]
         [CreditCard]
@@ -43,11 +50,10 @@ namespace SimonStore.Models
         [Display(Name = "Credit Card Verification Number")]
         public string CreditCardVerificationValue { get; set; }
         [Required]
-        [Display(Name = "Credit Card Expiration Month")]
+        [Display(Name = "Credit Card Expiration")]
         public int? CreditCardExpirationMonth { get; set; }
         [Required]
-        [Display(Name = "Credit Card Expiration Year")]
+        [Display(Name = "Credit Card Expiration")]
         public int? CreditCardExpirationYear { get; set; }
-        
     }
 }

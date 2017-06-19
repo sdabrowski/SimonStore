@@ -8,31 +8,213 @@
 @using (Html.BeginForm())
 {
     @*Anti-forgery token creates a hidden input on my form that has a bunch of hashed information embedded within it
-      The hashed data includes browser heuristics ushc as IP address, broswer version 
+        The hashed data includes browser heuristics ushc as IP address, broswer version
     *@
     @Html.AntiForgeryToken()
 
-    if(!this.ViewData.ModelState.IsValid)
+    if (!this.ViewData.ModelState.IsValid)
     {
         <div class="alert alert-danger">
             @Html.ValidationSummary(false)
         </div>
     }
-    
-    <div class="form-group">
-        @Html.LabelFor(x => x.ContactEmail, new { @class = "form-label" })
-        @Html.TextBoxFor(x => x.ContactEmail, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.ContactEmail)
+
+    //General Customer Information
+    <div class="well">
+        <h4>Customer Information</h4>
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                    @Html.ValidationMessageFor(x => x.FirstName)
+                </div>
+            </div>
+
+            <div class="col-xs-3">
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                    @Html.ValidationMessageFor(x => x.LastName)
+                </div>
+            </div>
+
+            <div class="col-xs-3">
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.ContactEmail, new { @class = "form-control", placeholder = "Email" })
+                    @Html.ValidationMessageFor(x => x.ContactEmail)
+                </div>
+            </div>
+
+            <div class="col-xs-3">
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.ContactPhone, new { @class = "form-control", placeholder = "Phone Number" })
+                    @Html.ValidationMessageFor(x => x.ContactPhone)
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(x => x.ContactPhone, new { @class = "form-label" })
-        @Html.TextBoxFor(x => x.ContactPhone, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.ContactPhone)
+
+    <div class="row">
+        @*Billing Address Information*@
+        <div class="col-xs-12 col-sm-6">
+            <div class="well">
+                <h4>Billing Information</h4>
+                <div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.BillingAddress.Street1, new { @class = "form-control", placeholder = "Street" })
+                        @Html.ValidationMessageFor(x => x.BillingAddress.Street1)
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.BillingAddress.Street2, new { @class = "form-control", placeholder = "Street (line 2)" })
+                        @Html.ValidationMessageFor(x => x.BillingAddress.Street2)
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.BillingAddress.City, new { @class = "form-control", placeholder = "City" })
+                        @Html.ValidationMessageFor(x => x.BillingAddress.City)
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.BillingAddress.State, new { @class = "form-control", placeholder = "State" })
+                        @Html.ValidationMessageFor(x => x.BillingAddress.State)
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.BillingAddress.PostalCode, new { @class = "form-control", placeholder = "Zip Code" })
+                        @Html.ValidationMessageFor(x => x.BillingAddress.PostalCode)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*Shipping Address Information*@
+        <div class="col-xs-12 col-sm-6">
+            <div class="well">
+                <h4>Shipping Information</h4>
+                <div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.ShippingAddress.Street1, new { @class = "form-control", placeholder = "Street" })
+                        @Html.ValidationMessageFor(x => x.ShippingAddress.Street1)
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.ShippingAddress.Street2, new { @class = "form-control", placeholder = "Street (line 2)" })
+                        @Html.ValidationMessageFor(x => x.ShippingAddress.Street2)
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.ShippingAddress.City, new { @class = "form-control", placeholder = "City" })
+                        @Html.ValidationMessageFor(x => x.ShippingAddress.City)
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.ShippingAddress.State, new { @class = "form-control", placeholder = "State" })
+                        @Html.ValidationMessageFor(x => x.ShippingAddress.State)
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.ShippingAddress.PostalCode, new { @class = "form-control", placeholder = "Zip Code" })
+                        @Html.ValidationMessageFor(x => x.ShippingAddress.PostalCode)
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    @*TODO: Need to add a lot more inputs on this page*@
-    <input type="submit" value="Complete Checkout" class="btn btn-primary" />
+
+    //Credit Card Information
+    <div class="row">
+        <div class="col-sm-3"></div>
+            <div class="well col-xs-12 col-sm-6">
+                <h4>Payment Information</h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.CreditCardName, new { @class = "form-control", placeholder = "Cardholder's Name" })
+                            @Html.ValidationMessageFor(x => x.CreditCardName)
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.CreditCardNumber, new { @class = "form-control", placeholder = "Credit Card Number" })
+                            @Html.ValidationMessageFor(x => x.CreditCardNumber)
+                        </div>
+                    </div>
+
+                </div>
+
+                <label for="expiry-month">Expiration</label>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                
+                                <select class="form-control" name="expiry-month" id="expiry-month">
+                                    <option>Month</option>
+                                    <option value="01">Jan (01)</option>
+                                    <option value="02">Feb (02)</option>
+                                    <option value="03">Mar (03)</option>
+                                    <option value="04">Apr (04)</option>
+                                    <option value="05">May (05)</option>
+                                    <option value="06">June (06)</option>
+                                    <option value="07">July (07)</option>
+                                    <option value="08">Aug (08)</option>
+                                    <option value="09">Sep (09)</option>
+                                    <option value="10">Oct (10)</option>
+                                    <option value="11">Nov (11)</option>
+                                    <option value="12">Dec (12)</option>
+                                </select>
+                                @Html.ValidationMessageFor(x => x.CreditCardExpirationMonth)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <div class="form-group">
+                            <select class="form-control" name="expiry-year">
+                                <option value="17">2017</option>
+                                <option value="18">2018</option>
+                                <option value="19">2019</option>
+                                <option value="20">2020</option>
+                                <option value="21">2021</option>
+                                <option value="22">2022</option>
+                                <option value="23">2023</option>
+                            </select>
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(x => x.CreditCardExpirationYear)
+
+                    <div class="col-xs-3">
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.CreditCardVerificationValue, new { @class = "form-control col-xs-1", placeholder = "CVV" })
+                            @Html.ValidationMessageFor(x => x.CreditCardVerificationValue)
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div align="center">
+    <input type="submit" value="Complete Checkout" class="btn btn-success" />
+    </div>
+
 }
 
 @section Scripts{
-    
+
 }

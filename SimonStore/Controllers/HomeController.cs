@@ -16,14 +16,14 @@ namespace SimonStore.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Welcome to Simon's Paracord Store!";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Have a question or concern? Let us know.";
 
             return View();
         }
