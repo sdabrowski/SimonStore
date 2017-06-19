@@ -37,22 +37,20 @@ namespace SimonStore.Controllers
             var manager = HttpContext.GetOwinContext().GetUserManager<UserManager<IdentityUser>>();
             var user = new IdentityUser() { UserName = username, Email = email, EmailConfirmed = false };
 
-            manager.UserTokenProvider =
-                 new EmailTokenProvider<IdentityUser>();
-
             IdentityResult result = await manager.CreateAsync(user, password);
             if (result.Succeeded)
             {
                 //I have some options: log them in, or I can send them an email to "Confirm" their account details
-                //I dont' have email set up this week, so we'll come back to that.
+                //I don't have email set up this week, so we'll come back to that.
 
                 string confirmationToken = await manager.GenerateEmailConfirmationTokenAsync(user.Id);
 
-                string confirmationLink = Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Confirm" + user.Id + "?token=" + confirmationToken;
+                string confirmationLink = Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Confirm/" + user.Id + "?token=" + confirmationToken;
 
                 string apiKey = System.Configuration.ConfigurationManager.AppSettings["SendGrid.ApiKey"];
 
                 SendGrid.ISendGridClient client = new SendGridClient(apiKey);
+
                 EmailAddress from = new EmailAddress("admin@ParacordStore.com", "Paracord Store");
 
                 EmailAddress to = new EmailAddress(email);
@@ -81,8 +79,6 @@ namespace SimonStore.Controllers
                 ViewBag.Error = result.Errors;
                 return View();
             }
-
-            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult ConfirmationSent()
@@ -99,14 +95,14 @@ namespace SimonStore.Controllers
         }
 
         // GET Account/LogOn
-        public ActionResult LogOn()
+        public ActionResult LogIn()
         {
             return View();
         }
 
         // POST Account/LogOn
         [HttpPost]
-        public async System.Threading.Tasks.Task<ActionResult> LogOn(string username, string password, bool? staySignedIn, string returnUrl)
+        public async System.Threading.Tasks.Task<ActionResult> LogIn(string username, string password, bool? staySignedIn, string returnUrl)
         {
 
             var userStore = new UserStore<IdentityUser>();

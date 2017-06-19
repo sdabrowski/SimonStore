@@ -19,14 +19,10 @@ namespace SimonStore.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            if (Request.Cookies.AllKeys.Contains("cart"))
-            {
                 HttpCookie cartCookie = Request.Cookies["cart"];
                 var order = entities.Orders.Find(int.Parse(cartCookie.Value));
 
                 return View(order);
-            }
-            return RedirectToAction("Index", "Home");
         }
 
         // POST: Cart

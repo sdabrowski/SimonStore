@@ -57,41 +57,43 @@
         @*Billing Address Information*@
         <div class="col-xs-12 col-sm-6">
             <div class="well">
-                <h4>Billing Information</h4>
-                <div>
-                    <div class="form-group">
-                        @Html.TextBoxFor(x => x.BillingAddress.Street1, new { @class = "form-control", placeholder = "Street" })
-                        @Html.ValidationMessageFor(x => x.BillingAddress.Street1)
+                <form class="form-horizontal">
+                    <h4>Billing Information</h4>
+                    <div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.BillingAddress.Street1, new { @class = "form-control", placeholder = "Street" })
+                            @Html.ValidationMessageFor(x => x.BillingAddress.Street1)
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <div class="form-group">
-                        @Html.TextBoxFor(x => x.BillingAddress.Street2, new { @class = "form-control", placeholder = "Street (line 2)" })
-                        @Html.ValidationMessageFor(x => x.BillingAddress.Street2)
+                    <div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.BillingAddress.Street2, new { @class = "form-control", placeholder = "Street (line 2) - Optional" })
+                            @Html.ValidationMessageFor(x => x.BillingAddress.Street2)
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <div class="form-group">
-                        @Html.TextBoxFor(x => x.BillingAddress.City, new { @class = "form-control", placeholder = "City" })
-                        @Html.ValidationMessageFor(x => x.BillingAddress.City)
+                    <div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.BillingAddress.City, new { @class = "form-control", placeholder = "City" })
+                            @Html.ValidationMessageFor(x => x.BillingAddress.City)
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <div class="form-group">
-                        @Html.TextBoxFor(x => x.BillingAddress.State, new { @class = "form-control", placeholder = "State" })
-                        @Html.ValidationMessageFor(x => x.BillingAddress.State)
+                    <div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.BillingAddress.State, new { @class = "form-control", placeholder = "State" })
+                            @Html.ValidationMessageFor(x => x.BillingAddress.State)
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <div class="form-group">
-                        @Html.TextBoxFor(x => x.BillingAddress.PostalCode, new { @class = "form-control", placeholder = "Zip Code" })
-                        @Html.ValidationMessageFor(x => x.BillingAddress.PostalCode)
+                    <div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.BillingAddress.PostalCode, new { @class = "form-control", placeholder = "Zip Code" })
+                            @Html.ValidationMessageFor(x => x.BillingAddress.PostalCode)
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -108,7 +110,7 @@
 
                 <div>
                     <div class="form-group">
-                        @Html.TextBoxFor(x => x.ShippingAddress.Street2, new { @class = "form-control", placeholder = "Street (line 2)" })
+                        @Html.TextBoxFor(x => x.ShippingAddress.Street2, new { @class = "form-control", placeholder = "Street (line 2) - Optional" })
                         @Html.ValidationMessageFor(x => x.ShippingAddress.Street2)
                     </div>
                 </div>
@@ -200,7 +202,7 @@
                     </div>
                     @Html.ValidationMessageFor(x => x.CreditCardExpirationYear)
 
-                    <div class="col-xs-3">
+                    <div class="col-xs-6">
                         <div class="form-group">
                             @Html.TextBoxFor(x => x.CreditCardVerificationValue, new { @class = "form-control col-xs-1", placeholder = "CVV" })
                             @Html.ValidationMessageFor(x => x.CreditCardVerificationValue)

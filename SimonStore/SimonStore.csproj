@@ -296,6 +296,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\script.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -315,6 +316,10 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SimonStoreModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Images\ELW-0001_spool.png" />
+    <Content Include="Images\ELW-0002_spool.png" />
+    <Content Include="Images\ELW-0003_spool.png" />
+    <Content Include="Images\ELW-0004_spool.png" />
     <Content Include="Models\SimonStoreModel.edmx.diagram">
       <DependentUpon>SimonStoreModel.edmx</DependentUpon>
     </Content>
@@ -351,7 +356,9 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="SQLQuery1.sql" />
     <Content Include="SQL_SimonStore_Insert.sql" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -373,7 +380,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Account\ConfirmationSent.cshtml" />
-    <Content Include="Views\Account\LogOn.cshtml" />
+    <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Views\Shared\_Cart.cshtml" />
   </ItemGroup>
   <ItemGroup>
