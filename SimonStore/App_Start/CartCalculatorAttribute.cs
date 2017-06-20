@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimonStore.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,18 +8,24 @@ namespace SimonStore
 {
     public class CartCalculatorAttribute : FilterAttribute, IActionFilter
     {
-        //This happens after the controller method is called
+        //This happens after the controller method is called creates cookie for the user to track what is in their cart
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            filterContext.Controller.ViewBag.CartItemCount = 0; if (filterContext.RequestContext.HttpContext.Request.Cookies.AllKeys.Contains("cart"))
+            filterContext.Controller.ViewBag.CartItemCount = 0;
+
+            if (filterContext.RequestContext.HttpContext.Request.Cookies.AllKeys.Contains("cart"))
             {
-                HttpCookie cartCookie = filterContext.RequestContext.HttpContext.Request.Cookies["cart"];
-                var cookieValues = cartCookie.Value.Split(',');
-                int quantity = int.Parse(cookieValues[1]);
-                filterContext.Controller.ViewBag.CartItemCount = quantity;
+                using (SimonStoreEntities e = new SimonStoreEntities())
+                {
+                    HttpCookie cartCookie = filterContext.RequestContext.HttpContext.Request.Cookies["cart"];
+                    var purchaseId = int.Parse(cartCookie.Value);
+                    int quantity = e.Orders.Single(x => x.OrderID == purchaseId).OrderedProducts.Sum(x => (x.Quantity ?? 0));
+                    filterContext.Controller.ViewBag.CartItemCount = quantity;
+                }
             }
         }        //This happens before the controller method is called
         public void OnActionExecuting(ActionExecutingContext filterContext)
-        { }
+        {
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace CodingTemple.CodingCookware.Web
             app.UseCookieAuthentication(new Microsoft.Owin.Security.Cookies.CookieAuthenticationOptions
             {
                 AuthenticationType = Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new Microsoft.Owin.PathString("/Account/LogOn")
+                LoginPath = new Microsoft.Owin.PathString("/Account/LogIn")
             });
 
             app.CreatePerOwinContext(() =>

@@ -4,11 +4,11 @@
 }
 
 <h2>Cart</h2>
-@if(Model.OrderedProducts.Count() == 0)
+@if (Model == null || Model.OrderedProducts.Count() == 0)
 {
     <div class="alert alert-warning">
-        <p>Your cart is currently empty.</p>
-        @Html.ActionLink("Go shopping", "Index", "Category", null, new { @class = "btn btn-primary"})
+        <h4>Your cart is currently empty.</h4>
+        @Html.ActionLink("Go shopping", "Index", "Category", null, new { @class = "btn btn-primary" })
     </div>
 }
 else
@@ -16,56 +16,69 @@ else
     using (Html.BeginForm())
     {
         @Html.HiddenFor(m => m.OrderID)
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Unit Price</th>
-                <th>Quantity</th>
-                <th></th>
-                <th>Total Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (int i = 0; i < Model.OrderedProducts.Count(); i++)
-            {
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td></td>
-                    <td>@Model.OrderedProducts.ElementAt(i).Product.Name</td>
-                    <td>@Model.OrderedProducts.ElementAt(i).Product.Description</td>
-                    <td>@((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0).ToString("c"))</td>
-                    <td>
-                        <input type="hidden" name="OrderedProducts[@i].SKU" value="@Model.OrderedProducts.ElementAt(i).SKU" />
-                        <input type="number" name="OrderedProducts[@i].Quantity" value="@Model.OrderedProducts.ElementAt(i).Quantity" class="form-control" />
-                    </td>
-                    <td><button onclick="removeItem(this)" id="Remove" class="btn btn-danger">Remove</button></td>
-                    @*<td><input type="button" value="Remove" id="Remove@i" class="btn btn-danger" /></td>*@
-                    
-                    @*the above line will render out <input type = "text" name = "model[0].quantity" class="form-control" />*@
-                    <td>@(((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0) * (Model.OrderedProducts.ElementAt(i).Quantity ?? 0)).ToString("c"))</td>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Unit Price</th>
+                    <th>
+                        <div class="row">
+                            <div class="hidden-xs col-sm-4"></div>
+                            <div class="col-xs-8 col-sm-4">
+                                Quantity
+                            </div>
+                        </div>
+                    </th>
+                    <th></th>
+                    <th>Total Price</th>
                 </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="6"></td>
-                <td>@Model.OrderedProducts.Sum(x => (x.Quantity ?? 0) * (x.ProductPrice ?? 0)).ToString("c")</td>
-            </tr>
-        </tfoot>
-        
-    </table>
-    <input type="submit" value="Update Cart" class="btn btn-default" />
-    @Html.ActionLink("Checkout", "Index", "Checkout", null, new { @class = "btn btn-primary" })
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.OrderedProducts.Count(); i++)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@Model.OrderedProducts.ElementAt(i).Product.Name</td>
+                        <td>@Model.OrderedProducts.ElementAt(i).Product.Description</td>
+                        <td>@((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0).ToString("c"))</td>
+                        <td>
+                            <input type="hidden" name="OrderedProducts[@i].SKU" value="@Model.OrderedProducts.ElementAt(i).SKU" />
+
+                            <div class="row">
+                                <div class="hidden-xs col-sm-4"></div>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="number" name="OrderedProducts[@i].Quantity" value="@Model.OrderedProducts.ElementAt(i).Quantity" class="form-control" />
+                                </div>
+                            </div>
+
+                        </td>
+                        <td><button onclick="removeItem(this)" id="Remove" class="btn btn-danger">Remove</button></td>
+                        @*<td><input type="button" value="Remove" id="Remove@i" class="btn btn-danger" /></td>*@
+
+                        @*the above line will render out <input type = "text" name = "model[0].quantity" class="form-control" />*@
+                        <td>@(((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0) * (Model.OrderedProducts.ElementAt(i).Quantity ?? 0)).ToString("c"))</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6"></td>
+                    <td>@Model.OrderedProducts.Sum(x => (x.Quantity ?? 0) * (x.ProductPrice ?? 0)).ToString("c")</td>
+                </tr>
+            </tfoot>
+
+        </table>
+        <input type="submit" value="Update Cart" class="btn btn-default" />
+        @Html.ActionLink("Checkout", "Index", "Checkout", null, new { @class = "btn btn-primary" })
     }
 }
 
 @section Scripts{
-<script>
-    function removeItem(x){
-        $(x).parent().parent().find(".form-control").val(0);
-        console.log("Test!")
-    };
-</script>
+    <script>
+        function removeItem(x) {
+            $(x).parent().parent().find(".form-control").val(0);
+        };
+    </script>
 }

@@ -16,7 +16,7 @@ namespace SimonStore.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Welcome to Simon's Paracord Store!";
+            ViewBag.Message = "Welcome to the Paracord Store!";
 
             return View();
         }

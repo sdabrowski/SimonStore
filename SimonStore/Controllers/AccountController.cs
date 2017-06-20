@@ -94,13 +94,13 @@ namespace SimonStore.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET Account/LogOn
+        // GET Account/LogIn
         public ActionResult LogIn()
         {
             return View();
         }
 
-        // POST Account/LogOn
+        // POST Account/LogIn
         [HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> LogIn(string username, string password, bool? staySignedIn, string returnUrl)
         {
@@ -160,7 +160,7 @@ namespace SimonStore.Controllers
             if (result.Succeeded)
             {
                 TempData["Confirmed"] = true;
-                return RedirectToAction("LogOn");
+                return RedirectToAction("LogIn");
             }
             else
             {
@@ -209,7 +209,7 @@ namespace SimonStore.Controllers
         public ActionResult ResetPassword(string token, string newPassword)
         {
 
-            return RedirectToAction("LogOn");
+            return RedirectToAction("LogIn");
         }
     }
 }
