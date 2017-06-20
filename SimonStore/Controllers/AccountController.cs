@@ -31,15 +31,20 @@ namespace SimonStore.Controllers
 
         // POST: Account/Register
         [HttpPost]
-        public async System.Threading.Tasks.Task<ActionResult> Register(string username, string email, string password)
+        public async System.Threading.Tasks.Task<ActionResult> Register(string username, string email, string phoneNumber, string password, string firstName, string lastName, string address1, string address2, string city, string state, string postalCode)
         {
             //var userStore = new UserStore<IdentityUser>();
             var manager = HttpContext.GetOwinContext().GetUserManager<UserManager<IdentityUser>>();
-            var user = new IdentityUser() { UserName = username, Email = email, EmailConfirmed = false };
+            var user = new IdentityUser() { UserName = username, Email = email, PhoneNumber = phoneNumber, EmailConfirmed = false };
+
+            
 
             IdentityResult result = await manager.CreateAsync(user, password);
             if (result.Succeeded)
             {
+                Models.SimonStoreEntities entities = new Models.SimonStoreEntities();
+                entities.Users.Add(new Models.User {  AspNetUserID = user.Id, FirstName = firstName, LastName = lastName, BillingStreetAddress1 = address1, ShippingStreetAddress1 = address1, BillingStreetAddress2 = address2, ShippingStreetAddress2 = address2, BillingCity = city, ShippingCity = city, BillingState = state, ShippingState = state, BillingZip = postalCode, ShippingZip = postalCode});
+                entities.SaveChanges();
                 //I have some options: log them in, or I can send them an email to "Confirm" their account details
                 //I don't have email set up this week, so we'll come back to that.
 

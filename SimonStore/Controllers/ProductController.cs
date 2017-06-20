@@ -101,10 +101,10 @@ namespace SimonStore.Controllers
                     //}
                     entities.Orders.Add(order);
                     entities.SaveChanges();
-                    if (!User.Identity.IsAuthenticated)
-                    {
+                    //if (!User.Identity.IsAuthenticated)
+                    //{
                         Response.Cookies.Add(new HttpCookie("cart", order.OrderID.ToString()));
-                    }
+                    //}
                 }
                 return order;
             }

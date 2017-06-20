@@ -18,6 +18,30 @@ namespace SimonStore.Controllers
             if (!Request.Cookies.AllKeys.Contains("cart"))
                 return RedirectToAction("Index", "Cart");
             CheckoutModel model = new CheckoutModel();
+            if (User.Identity.IsAuthenticated)
+            {
+                SimonStoreEntities entities = new SimonStoreEntities();
+                var user = entities.Users.FirstOrDefault(X => X.AspNetUser.UserName == User.Identity.Name);
+                if (user != null)
+                {
+                    model.FirstName = user.FirstName;
+                    model.LastName = user.LastName;
+                    model.ContactEmail = user.AspNetUser.Email;
+                    model.ContactPhone = user.AspNetUser.PhoneNumber;
+
+                    model.BillingAddress.Street1 = user.BillingStreetAddress1;
+                    model.BillingAddress.Street2 = user.BillingStreetAddress2;
+                    model.BillingAddress.City = user.BillingCity;
+                    model.BillingAddress.State = user.BillingState;
+                    model.BillingAddress.PostalCode = user.BillingZip;
+
+                    model.ShippingAddress.Street1 = user.ShippingStreetAddress1;
+                    model.ShippingAddress.Street2 = user.ShippingStreetAddress2;
+                    model.ShippingAddress.City = user.ShippingCity;
+                    model.ShippingAddress.State = user.ShippingState;
+                    model.ShippingAddress.PostalCode = user.ShippingZip;
+                }
+            }
 
             return View(model);
         }

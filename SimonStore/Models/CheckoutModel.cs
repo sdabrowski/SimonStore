@@ -16,10 +16,10 @@ namespace SimonStore.Models
 
         [Required]
         [Display(Name = "First Name")]
-        public AddressModel FirstName { get; set; }
+        public string FirstName { get; set; }
         [Required]
         [Display(Name = "Last Name")]
-        public AddressModel LastName { get; set; }
+        public string LastName { get; set; }
         [Phone]
         [Display(Name = "Phone Number")]
         public string ContactPhone { get; set; }
