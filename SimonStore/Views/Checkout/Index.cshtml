@@ -8,7 +8,7 @@
 @using (Html.BeginForm())
 {
     @*Anti-forgery token creates a hidden input on my form that has a bunch of hashed information embedded within it
-        The hashed data includes browser heuristics ushc as IP address, broswer version
+        The hashed data includes browser heuristics ushc as IP address, browser version
     *@
     @Html.AntiForgeryToken()
 

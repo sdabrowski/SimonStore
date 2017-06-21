@@ -12,6 +12,12 @@ namespace SimonStore.Controllers
 {
     public class CheckoutController : Controller
     {
+        private IAddressValidationService avs;
+        private SimonStoreEntities db;
+        private IBraintreeGateway _braintreeGateway;
+        private IIdentityMessageService _emailService;
+        private IIdentityMessageService _smsService;
+
         // GET: Checkout
         public ActionResult Index()
         {
@@ -62,11 +68,31 @@ namespace SimonStore.Controllers
                     PrivateKey = ConfigurationManager.AppSettings["Braintree.PrivateKey"]
                 };
                 CustomerRequest customer = new CustomerRequest();
+                customer.FirstName = model.FirstName;
+                customer.LastName = model.LastName;
+
+                customer.CreditCard.BillingAddress.StreetAddress = model.BillingAddress.Street1 + " " + model.BillingAddress.Street2;
+                customer.CreditCard.BillingAddress.Locality = model.BillingAddress.City;
+                customer.CreditCard.BillingAddress.PostalCode = model.BillingAddress.PostalCode;
+                //customer.CustomerId = somehow try to link to userid no idea how
+
                 customer.Email = model.ContactEmail;
                 customer.Phone = model.ContactPhone;
                 var customerResult = await gateway.Customer.CreateAsync(customer);
 
-                //TODO: Save the checkout information somewhere
+                Braintree.CreditCardRequest card = new Braintree.CreditCardRequest();
+                card.Number = model.CreditCardNumber;
+                card.CVV = model.CreditCardVerificationValue;
+                card.ExpirationMonth = model.CreditCardExpirationMonth.ToString().PadLeft(2, '0');
+                card.ExpirationYear = model.CreditCardExpirationYear.ToString();
+                card.CardholderName = model.FirstName + " " + model.LastName;
+                //card.CustomerId = model.CustomerId; somehow try to link to userid no idea how
+                var cardResult = await _braintreeGateway.CreditCard.CreateAsync(card);
+                model.CardToken = cardResult.Target.Token;
+
+
+
+                //TODO: Save the checkout information somewhere - I want to do this tomorrow as well
                 return RedirectToAction("Index", "Receipt");
             }
             return View(model);
