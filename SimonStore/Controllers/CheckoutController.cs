@@ -4,15 +4,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SimonStore.Models;
-using Braintree;
 using System.Configuration;
+using System.Text;
 using System.Threading.Tasks;
+using Braintree;
+using Microsoft.AspNet.Identity;
 
 namespace SimonStore.Controllers
 {
     public class CheckoutController : Controller
     {
-        private IAddressValidationService avs;
+        //private IAddressValidationService avs;
         private SimonStoreEntities db;
         private IBraintreeGateway _braintreeGateway;
         private IIdentityMessageService _emailService;
@@ -74,7 +76,7 @@ namespace SimonStore.Controllers
                 customer.CreditCard.BillingAddress.StreetAddress = model.BillingAddress.Street1 + " " + model.BillingAddress.Street2;
                 customer.CreditCard.BillingAddress.Locality = model.BillingAddress.City;
                 customer.CreditCard.BillingAddress.PostalCode = model.BillingAddress.PostalCode;
-                //customer.CustomerId = somehow try to link to userid no idea how
+                //customer.CustomerId = //somehow try to link to userID no idea how
 
                 customer.Email = model.ContactEmail;
                 customer.Phone = model.ContactPhone;
@@ -88,7 +90,7 @@ namespace SimonStore.Controllers
                 card.CardholderName = model.FirstName + " " + model.LastName;
                 //card.CustomerId = model.CustomerId; somehow try to link to userid no idea how
                 var cardResult = await _braintreeGateway.CreditCard.CreateAsync(card);
-                model.CardToken = cardResult.Target.Token;
+                //model.CardToken = cardResult.Target.Token;
 
 
 
