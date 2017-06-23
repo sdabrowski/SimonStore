@@ -44,6 +44,8 @@ namespace SimonStore.Controllers
                 product.Quantity = modelProduct.Quantity;
                 
             }
+
+            order.LastModifiedOn = DateTime.UtcNow;
             entities.OrderedProducts.RemoveRange(order.OrderedProducts.Where(x => x.Quantity == 0));
             entities.SaveChanges();
             return RedirectToAction("Index");

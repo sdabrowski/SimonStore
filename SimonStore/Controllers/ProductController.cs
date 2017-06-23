@@ -72,6 +72,8 @@ namespace SimonStore.Controllers
                 };
                 order.OrderedProducts.Add(orderedProduct);
             }
+
+            order.LastModifiedOn = DateTime.UtcNow;
             entities.SaveChanges();
             return RedirectToAction("Index", "Cart");
         }
@@ -99,6 +101,8 @@ namespace SimonStore.Controllers
                     //{
                     //    b.AspNetUserID = entities.AspNetUsers.FirstOrDefault(x => x.UserName == User.Identity.Name).Id;
                     //}
+                    order.CreatedOn = DateTime.UtcNow;
+                    order.LastModifiedOn = DateTime.UtcNow;
                     entities.Orders.Add(order);
                     entities.SaveChanges();
                     //if (!User.Identity.IsAuthenticated)

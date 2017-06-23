@@ -15,7 +15,16 @@ namespace SimonStore.Controllers
     public class CheckoutController : Controller
     {
         //private IAddressValidationService avs;
-        private SimonStoreEntities db;
+        private SimonStoreEntities  db = new SimonStoreEntities();
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
         private IBraintreeGateway _braintreeGateway;
         private IIdentityMessageService _emailService;
         private IIdentityMessageService _smsService;
@@ -69,18 +78,36 @@ namespace SimonStore.Controllers
                     PublicKey =  ConfigurationManager.AppSettings["Braintree.PublicKey"],
                     PrivateKey = ConfigurationManager.AppSettings["Braintree.PrivateKey"]
                 };
-                CustomerRequest customer = new CustomerRequest();
-                customer.FirstName = model.FirstName;
-                customer.LastName = model.LastName;
 
-                customer.CreditCard.BillingAddress.StreetAddress = model.BillingAddress.Street1 + " " + model.BillingAddress.Street2;
-                customer.CreditCard.BillingAddress.Locality = model.BillingAddress.City;
-                customer.CreditCard.BillingAddress.PostalCode = model.BillingAddress.PostalCode;
-                //customer.CustomerId = //somehow try to link to userID no idea how
+                CustomerSearchRequest searchRequest = new CustomerSearchRequest();
+                searchRequest.Email.Is(model.ContactEmail);
 
-                customer.Email = model.ContactEmail;
-                customer.Phone = model.ContactPhone;
-                var customerResult = await gateway.Customer.CreateAsync(customer);
+                Customer c = null;
+                var existingCustomers = await gateway.Customer.SearchAsync(searchRequest);
+                if (existingCustomers.Ids.Any())
+                {
+                    c = existingCustomers.FirstItem;
+                }
+                else
+                {
+                    CustomerRequest newCustomer = new CustomerRequest();
+                    newCustomer.FirstName = model.FirstName;
+                    newCustomer.LastName = model.LastName;
+                    newCustomer.Email = model.ContactEmail;
+                    newCustomer.Phone = model.ContactPhone;
+                    var customerResult = await gateway.Customer.CreateAsync(newCustomer);
+                    if (customerResult.IsSuccess())
+                    {
+                        c = customerResult.Target;
+                    }
+                    else
+                    {
+                        throw new Exception(customerResult.Errors.All().First().Message);
+                    }
+                }
+
+
+                string token;
 
                 Braintree.CreditCardRequest card = new Braintree.CreditCardRequest();
                 card.Number = model.CreditCardNumber;
@@ -88,14 +115,63 @@ namespace SimonStore.Controllers
                 card.ExpirationMonth = model.CreditCardExpirationMonth.ToString().PadLeft(2, '0');
                 card.ExpirationYear = model.CreditCardExpirationYear.ToString();
                 card.CardholderName = model.FirstName + " " + model.LastName;
-                //card.CustomerId = model.CustomerId; somehow try to link to userid no idea how
-                var cardResult = await _braintreeGateway.CreditCard.CreateAsync(card);
-                //model.CardToken = cardResult.Target.Token;
+                card.CustomerId = c.Id;
+                var cardResult = await gateway.CreditCard.CreateAsync(card);
+                if (cardResult.IsSuccess())
+                {
 
 
+                    token = cardResult.Target.Token;
+                }
+                else
+                {
+                    throw new Exception(cardResult.Errors.All().First().Message);
+                }
 
-                //TODO: Save the checkout information somewhere - I want to do this tomorrow as well
-                return RedirectToAction("Index", "Receipt");
+                HttpCookie cartCookie = Request.Cookies["cart"];
+                var order = db.Orders.Find(int.Parse(cartCookie.Value));
+
+                Braintree.TransactionRequest transaction = new TransactionRequest();
+                transaction.PaymentMethodToken = token;
+                transaction.Amount = order.OrderedProducts.Sum(x => (x.Product.Price ?? 0) * (x.Quantity ?? 0));
+                transaction.CustomerId = c.Id;
+                var saleResult = await gateway.Transaction.SaleAsync(transaction);
+                if (saleResult.IsSuccess())
+                {
+                    Response.SetCookie(new HttpCookie("cart") { Expires = DateTime.Now });
+                    order.OrderCompletedDate = DateTime.UtcNow;
+                    order.CustomerEmail = model.ContactEmail;
+
+                    order.BillingStreetAddress1 = model.BillingAddress.Street1;
+                    if(model.BillingAddress.Street2 != null)
+                    {
+                        order.BillingStreetAddress2 = model.BillingAddress.Street2;
+                    }
+                    order.BillingCity = model.BillingAddress.City;
+                    order.BillingState = model.BillingAddress.State;
+                    order.BillingZip = model.BillingAddress.PostalCode;
+
+                    order.ShippingStreetAddress1 = model.ShippingAddress.Street1;
+                    if (model.ShippingAddress.Street2 != null)
+                    {
+                        order.ShippingStreetAddress2 = model.ShippingAddress.Street2;
+                    }
+                    order.ShippingCity = model.ShippingAddress.City;
+                    order.ShippingState = model.ShippingAddress.State;
+                    order.ShippingZip = model.ShippingAddress.PostalCode;
+
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        var user = db.Users.FirstOrDefault(X => X.AspNetUser.UserName == User.Identity.Name);
+                        order.AspNetUserID = user.AspNetUserID;
+                    }
+                    order.LastModifiedOn = DateTime.UtcNow;
+
+                    await db.SaveChangesAsync();
+
+                    return RedirectToAction("Index", "Receipt");
+                }
+                
             }
             return View(model);
         }

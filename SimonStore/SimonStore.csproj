@@ -214,6 +214,7 @@
     <Compile Include="Controllers\ERPController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ReceiptController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -320,10 +321,21 @@
     <Content Include="Images\ELW-0002_spool.png" />
     <Content Include="Images\ELW-0003_spool.png" />
     <Content Include="Images\ELW-0004_spool.png" />
+    <Content Include="Images\ELW-0005_spool.png" />
+    <Content Include="Images\ELW-0008_spool.png" />
+    <Content Include="Images\ELW-0010_spool.png" />
+    <Content Include="Images\ELW-0011_spool.png" />
+    <Content Include="Images\Spinner\1.jpg" />
+    <Content Include="Images\Spinner\B1.jpg" />
+    <Content Include="Images\Spinner\B2.jpg" />
+    <Content Include="Images\Spinner\B3.jpg" />
+    <Content Include="Images\Spinner\B4.jpg" />
     <Content Include="Models\SimonStoreModel.edmx.diagram">
       <DependentUpon>SimonStoreModel.edmx</DependentUpon>
     </Content>
     <Content Include="appSettings.config" />
+    <None Include="Properties\PublishProfiles\paracord - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\paracord - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Models\SimonStoreModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -385,6 +397,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Receipt\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
