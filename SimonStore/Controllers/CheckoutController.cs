@@ -170,6 +170,8 @@ namespace SimonStore.Controllers
                     await db.SaveChangesAsync();
 
                     return RedirectToAction("Index", "Receipt");
+                    //Need to create a Receipt Controller, as well as a View to show receipt, send email confirmation.
+                    //Check Joe's Github for inspiration
                 }
                 
             }
