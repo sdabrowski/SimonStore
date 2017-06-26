@@ -242,3 +242,11 @@ ModelManifest.xml
 .fake/
 /SimonStoreDB/SimonStoreDB.jfm
 /SimonStore/appSettings.config
+/SimonStore/Properties/PublishProfiles/paracord - Web Deploy.pubxml
+SimonStore/Properties/PublishProfiles/paracord - Web Deploy (2).pubxml
+*.pubxml
+SimonStore/Properties/PublishProfiles/paracord - Web Deploy.pubxml
+SimonStore/Properties/PublishProfiles/paracord - Web Deploy.pubxml
+SimonStore/Properties/PublishProfiles/paracord - Web Deploy.pubxml
+SimonStore/Properties/PublishProfiles/paracord - Web Deploy.pubxml
+*.pubxml
