@@ -250,3 +250,5 @@ SimonStore/Properties/PublishProfiles/paracord - Web Deploy.pubxml
 SimonStore/Properties/PublishProfiles/paracord - Web Deploy.pubxml
 SimonStore/Properties/PublishProfiles/paracord - Web Deploy.pubxml
 *.pubxml
+*.pubxml
+SimonStore/Properties/PublishProfiles/paracord - Web Deploy.pubxml
