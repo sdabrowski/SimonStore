@@ -19,6 +19,7 @@ namespace SimonStore.Controllers
             base.Dispose(disposing);
         }
         // GET: Receipt
+        //May need to see what "purchase" means
         public ActionResult Index(string id)
         {
             var purchase = db.Orders.SingleOrDefault(x => x.OrderID.ToString() == id);
