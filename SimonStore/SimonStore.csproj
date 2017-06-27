@@ -400,10 +400,10 @@
     <Content Include="Views\Account\ConfirmationSent.cshtml" />
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Views\Shared\_Cart.cshtml" />
+    <Content Include="Views\Receipt\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Receipt\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

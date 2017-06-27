@@ -18,12 +18,22 @@ namespace SimonStore
                 using (SimonStoreEntities e = new SimonStoreEntities())
                 {
                     HttpCookie cartCookie = filterContext.RequestContext.HttpContext.Request.Cookies["cart"];
-                    var purchaseId = int.Parse(cartCookie.Value);
-                    int quantity = e.Orders.Single(x => x.OrderID == purchaseId).OrderedProducts.Sum(x => (x.Quantity ?? 0));
-                    filterContext.Controller.ViewBag.CartItemCount = quantity;
-                }
+
+                    if (cartCookie == null)
+                    {
+                        filterContext.Controller.ViewBag.CartItemCount = 0;
+                    }
+                    else
+                    {
+                        var purchaseId = int.Parse(cartCookie.Value);
+                        int quantity = e.Orders.Single(x => x.OrderID == purchaseId).OrderedProducts.Sum(x => (x.Quantity ?? 0));
+                        filterContext.Controller.ViewBag.CartItemCount = quantity;
+                    }
+
+                }  
             }
-        }        //This happens before the controller method is called
+        }        
+        //This happens before the controller method is called
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
         }

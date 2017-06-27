@@ -1,0 +1,44 @@
+﻿@model SimonStore.Models.Order
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@Model.OrderID</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.OrderedProducts.Count(); i++)
+        {
+            <tr>
+                <td></td>
+                <td>@Model.OrderedProducts.ElementAt(i).Product.Name</td>
+                <td>@Model.OrderedProducts.ElementAt(i).Product.Description</td>
+                <td>@((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0).ToString())</td>
+                <td>
+                    @Model.OrderedProducts.ElementAt(i).Quantity
+                </td>
+
+                <td>
+                    @(((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0) * Model.OrderedProducts.ElementAt(i).Quantity).ToString())
+                </td>
+
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5">Total</td>
+            <td>@Model.OrderedProducts.Sum(x => (x.Product.Price ?? 0) * x.Quantity).ToString()</td>
+        </tr>
+    </tfoot>
+</table>
