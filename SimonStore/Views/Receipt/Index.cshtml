@@ -5,7 +5,95 @@
 
 <h3>Thank you for placing your order, @Model.AspNetUser.UserName!</h3>
 
+<h4>An email with your order information has been sent to: @Model.CustomerEmail</h4>
+
+<hr />
+
 <h4>Order Number: @Model.OrderID</h4>
+
+<div class="row" align="center">
+    <div class="col-xs-12 col-sm-4">
+        <div class="well">
+            <div class="row">
+                <h4>Customer Information:</h4>
+                <div>
+                    <h6><strong>Name:</strong> @Model.AspNetUser.User.FirstName @Model.AspNetUser.User.LastName</h6>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        <h6><strong>Email:</strong> @Model.CustomerEmail</h6>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        <h6><strong>Phone:</strong> @Model.AspNetUser.PhoneNumber</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Billing & Shipping Information -->
+
+    @*Billing Address Information*@
+    <div class="col-xs-12 col-sm-4">
+        <div class="well">
+                <h4>Billing Information:</h4>
+                <div>
+                    <div class="form-group">
+                        <h6>@Model.AspNetUser.User.FirstName @Model.AspNetUser.User.LastName</h6>
+                    </div>
+
+                    <div class="form-group">
+                        <h6>@Model.BillingStreetAddress1</h6>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        <h6>@Model.BillingStreetAddress2</h6>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        <h6>@Model.BillingCity, @Model.BillingState @Model.BillingZip</h6>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    @*Shipping Address Information*@
+    <div class="col-xs-12 col-sm-4">
+        <div class="well">
+            <h4>Shipping Information:</h4>
+            <div>
+                <div class="form-group">
+                    <h6>@Model.AspNetUser.User.FirstName @Model.AspNetUser.User.LastName</h6>
+                </div>
+
+                <div class="form-group">
+                    <h6>@Model.ShippingStreetAddress1</h6>
+                </div>
+            </div>
+
+            <div>
+                <div class="form-group">
+                    <h6>@Model.ShippingStreetAddress2</h6>
+                </div>
+            </div>
+
+            <div>
+                <div class="form-group">
+                    <h6>@Model.ShippingCity, @Model.ShippingState @Model.ShippingZip</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <table class="table table-striped">
     <thead>
@@ -39,8 +127,9 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="5">Total</td>
+            <td colspan="5"><strong>Total</strong></td>
             <td>@Model.OrderedProducts.Sum(x => (x.Product.Price ?? 0) * (x.Quantity ?? 0)).ToString("c")</td>
         </tr>
     </tfoot>
 </table>
+<div align="center">@Html.ActionLink("Back To Store", "Index", "Home", null, new { @class = "btn btn-primary" })</div>

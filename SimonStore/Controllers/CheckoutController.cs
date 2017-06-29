@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Braintree;
 using Microsoft.AspNet.Identity;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace SimonStore.Controllers
 {
@@ -106,7 +108,6 @@ namespace SimonStore.Controllers
                     }
                 }
 
-
                 string token;
 
                 Braintree.CreditCardRequest card = new Braintree.CreditCardRequest();
@@ -119,8 +120,6 @@ namespace SimonStore.Controllers
                 var cardResult = await gateway.CreditCard.CreateAsync(card);
                 if (cardResult.IsSuccess())
                 {
-
-
                     token = cardResult.Target.Token;
                 }
                 else
@@ -169,13 +168,95 @@ namespace SimonStore.Controllers
 
                     await db.SaveChangesAsync();
 
+                    string apiKey = System.Configuration.ConfigurationManager.AppSettings["SendGrid.ApiKey"];
+
+                    SendGrid.ISendGridClient client = new SendGridClient(apiKey);
+
+                    EmailAddress from = new EmailAddress("sales@ParacordStore.com", "Paracord Store");
+
+                    EmailAddress to = new EmailAddress(model.ContactEmail);
+
+                    string subject = string.Format("Your Paracord Store Order {0}", order.OrderID);
+
+                    string htmlContent = CreateReceiptEmail(order);
+                    string plainTextContent = CreatePlaintextEmail(order);
+
+                    SendGridMessage message = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                    message.SetTemplateId("a179572c-a791-467e-aebb-5ea6cca0fb2c");
+
+                    Response response = await client.SendEmailAsync(message);
+
+                    TempData["EmailAddress"] = model.ContactEmail;
+
                     return RedirectToAction("Index", "Receipt", new { id = order.OrderID } );
-                    //Need to create a Receipt Controller, as well as a View to show receipt, send email confirmation.
-                    //Check Joe's Github for inspiration
                 }
-                
             }
             return View(model);
+        }
+
+        private static string CreatePlaintextEmail(Order p)
+        {
+            StringBuilder builder = new StringBuilder();
+            //Your order: Name Description Unit Price Quantity Total Price
+
+            builder.Append("Your Paracord Store Order: ");
+            builder.Append(p.OrderID);
+            foreach (var product in p.OrderedProducts)
+            {
+                builder.Append("Product Name: ");
+                builder.Append(product.Product.Name);
+                builder.Append(" ");
+
+                builder.Append("Product Description: ");
+                builder.Append(product.Product.Description);
+                builder.Append(" ");
+                builder.Append("Product Price: ");
+                builder.Append((product.ProductPrice ?? 0).ToString("c"));
+                builder.Append(" ");
+                builder.Append("Product Quantity: ");
+                builder.Append(product.Quantity);
+                builder.Append(" ");
+                builder.Append("Total Price: ");
+                builder.Append(((product.ProductPrice ?? 0) * (product.Quantity ?? 0)).ToString("c"));
+                builder.Append(" ");
+            }
+            builder.Append("Sum Total: ");
+            builder.Append(p.OrderedProducts.Sum(x => (x.Product.Price ?? 0) * x.Quantity ?? 0).ToString("c"));
+            return builder.ToString();
+        }
+
+        private static string CreateReceiptEmail(Order p)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<table>");
+            builder.Append("<thead><tr><th></th><th>Name</th><th>Description</th><th>Unit Price</th><th>Quantity</th><th>Total Price</th></tr></thead>");
+            builder.Append("<tbody>");
+            foreach (var product in p.OrderedProducts)
+            {
+                builder.Append("<tr><td></td>");
+                builder.Append("<td>");
+                builder.Append(product.Product.Name);
+                builder.Append("</td>");
+
+                builder.Append("<td>");
+                builder.Append(product.Product.Description);
+                builder.Append("</td>");
+                builder.Append("<td>");
+                builder.Append((product.ProductPrice ?? 0).ToString("c"));
+                builder.Append("</td>");
+                builder.Append("<td>");
+                builder.Append(product.Quantity);
+                builder.Append("</td>");
+                builder.Append("<td>");
+                builder.Append(((product.ProductPrice ?? 0) * (product.Quantity ?? 0)).ToString("c"));
+                builder.Append("</td>");
+
+                builder.Append("</tr>");
+            }
+            builder.Append("</tbody><tfoot><tr><td colspan=\"5\">Total</td><td>");
+            builder.Append(p.OrderedProducts.Sum(x => (x.Product.Price ?? 0) * x.Quantity ?? 0).ToString("c"));
+            builder.Append("</td></tr></tfoot></table>");
+            return builder.ToString();
         }
 
         public ActionResult ValidateAddress(string street1, string street2, string city, string state, string postalCode)
@@ -200,5 +281,6 @@ namespace SimonStore.Controllers
             }
             return Json(new object[0], JsonRequestBehavior.AllowGet);
         }
+
     }
 }

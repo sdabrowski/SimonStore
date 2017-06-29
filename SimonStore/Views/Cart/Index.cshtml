@@ -70,8 +70,11 @@ else
             </tfoot>
 
         </table>
-        <input type="submit" value="Update Cart" class="btn btn-default" />
-        @Html.ActionLink("Checkout", "Index", "Checkout", null, new { @class = "btn btn-primary" })
+        <div class="row">
+            @Html.ActionLink("Continue Shopping", "Index", "Category", null, new { @class = "btn btn-primary" })
+            <input type="submit" value="Update Cart" class="btn btn-default" />
+            @Html.ActionLink("Checkout", "Index", "Checkout", null, new { @class = "btn btn-success" })
+        </div>
     }
 }
 
