@@ -3,7 +3,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>@Model.OrderID</h2>
+<h3>Thank you for placing your order, @Model.AspNetUser.UserName!</h3>
+
+<h4>Order Number: @Model.OrderID</h4>
 
 <table class="table table-striped">
     <thead>
@@ -23,13 +25,13 @@
                 <td></td>
                 <td>@Model.OrderedProducts.ElementAt(i).Product.Name</td>
                 <td>@Model.OrderedProducts.ElementAt(i).Product.Description</td>
-                <td>@((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0).ToString())</td>
+                <td>@((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0).ToString("c"))</td>
                 <td>
                     @Model.OrderedProducts.ElementAt(i).Quantity
                 </td>
 
                 <td>
-                    @(((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0) * Model.OrderedProducts.ElementAt(i).Quantity).ToString())
+                    @(((Model.OrderedProducts.ElementAt(i).Product.Price ?? 0) * (Model.OrderedProducts.ElementAt(i).Quantity ?? 0)).ToString("c"))
                 </td>
 
             </tr>
@@ -38,7 +40,7 @@
     <tfoot>
         <tr>
             <td colspan="5">Total</td>
-            <td>@Model.OrderedProducts.Sum(x => (x.Product.Price ?? 0) * x.Quantity).ToString()</td>
+            <td>@Model.OrderedProducts.Sum(x => (x.Product.Price ?? 0) * (x.Quantity ?? 0)).ToString("c")</td>
         </tr>
     </tfoot>
 </table>

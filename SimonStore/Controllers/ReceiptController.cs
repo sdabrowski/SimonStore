@@ -20,10 +20,19 @@ namespace SimonStore.Controllers
         }
         // GET: Receipt
         //May need to see what "purchase" means
-        public ActionResult Index(string id)
+        public ActionResult Index(int id)
         {
-            var purchase = db.Orders.SingleOrDefault(x => x.OrderID.ToString() == id);
+            var purchase = db.Orders.SingleOrDefault(x => x.OrderID == id);
             return View(purchase);
+
+            //var purchase = db.Orders.SingleOrDefault(x => x.OrderID == id);
+            //foreach (var product in purchase.OrderedProducts)
+            //{
+            //    var modelProduct = purchase.OrderedProducts.FirstOrDefault(x => x.SKU == product.SKU);
+            //    product.Quantity = modelProduct.Quantity;
+
+            //}
+            //return RedirectToAction("Index");
         }
     }
 }

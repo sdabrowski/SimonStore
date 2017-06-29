@@ -19,7 +19,7 @@ namespace SimonStore
                 {
                     HttpCookie cartCookie = filterContext.RequestContext.HttpContext.Request.Cookies["cart"];
 
-                    if (cartCookie == null)
+                    if (cartCookie == null || cartCookie.Value == "")
                     {
                         filterContext.Controller.ViewBag.CartItemCount = 0;
                     }
